@@ -11,9 +11,8 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+   
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -21,10 +20,24 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "plugins": [
+        [
+          "expo-contacts",
+          {
+            "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
+          }
+        ]
+      ],
+      "package": "com.shadowBrand"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "28100921-e47d-4bf5-b168-1eab615606d5"
+      }
     }
   }
 }

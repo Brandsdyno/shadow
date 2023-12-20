@@ -21,6 +21,7 @@ export default function RootNavigation() {
             headerShown: false,
           }}
         />
+
         <Stack.Screen
           name="PasswordReset"
           component={PasswordReset}

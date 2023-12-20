@@ -6,6 +6,7 @@ import {
   ScrollView,
   useWindowDimensions,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ThemedView, StatusBar } from "../../components/UIcomponents";
@@ -48,12 +49,14 @@ export default function Profile() {
     }
   }, [focued]);
 
-  function editHandler() {}
+  function editHandler() {
+    Alert.alert("Profile Details Will Update");
+  }
   return (
     <React.Fragment>
       <StatusBar />
       <ThemedView>
-        <ScrollView style={[styles.main, { height: height }]}>
+        <ScrollView style={[styles.main]}>
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             // style={[styles.main, { height: height }]}
@@ -139,6 +142,7 @@ export default function Profile() {
                   backgroundColor: "black",
                   width: 189,
                   alignSelf: "center",
+                  marginBottom: 40,
                 }}
                 onPress={editHandler}
               />
@@ -153,6 +157,8 @@ export default function Profile() {
 const styles = StyleSheet.create({
   main: {
     flexDirection: "column",
+    // marginVertical : 100
+    paddingVertical: 20,
   },
   profile_pic: {
     width: 188,

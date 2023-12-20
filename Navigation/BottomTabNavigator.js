@@ -3,7 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from "../Screens";
 import { icons } from "../constants";
-import { Profile, Contacts, UserPlus } from "../Screens";
+import { Profile, Contacts, UserPlus, AddContacts } from "../Screens";
 const Tab = createBottomTabNavigator();
 export function EmptyComponent() {
   return null;
@@ -28,7 +28,7 @@ const BottomTabNavigator = () => {
             iconName = focused ? icons.profile : icons.profile;
           } else if (route.name === "Contacts") {
             iconName = focused ? icons.call : icons.call;
-          } else if (route.name === "UserPlus") {
+          } else if (route.name === "AddContacts") {
             iconName = focused ? icons.userPlus : icons.userPlus;
           }
           return (
@@ -66,8 +66,8 @@ const BottomTabNavigator = () => {
       />
 
       <Tab.Screen
-        name="UserPlus"
-        component={UserPlus}
+        name="AddContacts"
+        component={AddContacts}
         options={{
           tabBarLabel: "Notifications",
         }}

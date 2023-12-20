@@ -1,21 +1,29 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from "react-native";
 import React from "react";
 import { ThemedView, StatusBar } from "../../components/UIcomponents";
 import { images } from "../../constants";
+import { height } from "../../constants/metrics";
 export default function Home({ navigation, route }) {
   return (
     <React.Fragment>
       <StatusBar />
       <ThemedView>
-        <View style={styles.main}>
+        <View style={[styles.main, { height: height }]}>
           <View style={styles.logo}>
-            <Text
+            <Image
+              source={images.logo}
               style={{
-                color: "white",
+                width: "100%",
+                height: "100%",
               }}
-            >
-              Logo
-            </Text>
+            />
           </View>
           <View style={styles.btns}>
             <TouchableOpacity
@@ -29,7 +37,7 @@ export default function Home({ navigation, route }) {
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                navigation.navigate("Contacts");
+                navigation.navigate("AddContacts");
               }}
             >
               <Text style={styles.btn_name}>Add Contacts</Text>
@@ -37,17 +45,20 @@ export default function Home({ navigation, route }) {
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                navigation.navigate("Profile");
+                navigation.navigate("Contacts");
               }}
             >
               <Text style={styles.btn_name}>View Contacts</Text>
             </TouchableOpacity>
           </View>
 
-          <View
+          <TouchableOpacity
             style={{
               alignSelf: "flex-end",
               marginTop: 30,
+            }}
+            onPress={() => {
+              Alert.alert("hands pressed");
             }}
           >
             <Image
@@ -57,7 +68,7 @@ export default function Home({ navigation, route }) {
                 height: 88,
               }}
             />
-          </View>
+          </TouchableOpacity>
         </View>
       </ThemedView>
     </React.Fragment>
@@ -69,6 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     gap: 20,
+    justifyContent: "center",
   },
   logo: {
     width: 188,

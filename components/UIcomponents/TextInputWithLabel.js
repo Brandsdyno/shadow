@@ -54,7 +54,7 @@ const TextInputWithLabel = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderBottomColor: "#CCCCCC",
     marginBottom: verticalScale(16),
     position: "relative",
