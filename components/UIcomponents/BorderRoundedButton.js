@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#023C40",
   },
   outlineButton: {
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: "#023C40",
   },
   buttonText: {

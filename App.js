@@ -5,7 +5,16 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 
+import { store } from "./Store/store.js";
+import { Provider } from "react-redux";
+import { useSelector} from "react-redux";
+import { setSignInData } from "./Store/Slices/SignIn/index.js";
+// import { PersistGate } from "redux-persist/integration/react";
+
 import { RootNavigation } from "./Navigation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Inter: require("./assets/fonts/Inter-Regular.ttf"),
@@ -17,11 +26,15 @@ export default function App() {
   return (
     <>
       <SafeAreaProvider style={{ flex: 1 }}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <NavigationContainer>
-            <RootNavigation />
-          </NavigationContainer>
-        </GestureHandlerRootView>
+        <Provider store={store}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            {/* <PersistGate loading={null} persistor={persistor}> */}
+            <NavigationContainer>
+              <RootNavigation />
+            </NavigationContainer>
+            {/* </PersistGate> */}
+          </GestureHandlerRootView>
+        </Provider>
       </SafeAreaProvider>
     </>
   );

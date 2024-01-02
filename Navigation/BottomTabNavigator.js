@@ -36,6 +36,17 @@ const BottomTabNavigator = () => {
           );
         },
       })}
+      tabBarOptions={{
+        style: {
+          backgroundColor: "red",
+        },
+      }}
+      // sceneContainerStyle={{
+      //   backgroundColor: "#BFA05E",
+      // }}
+      tabBarStyle={{
+        backgroundColor: "#BFA05E",
+      }}
     >
       <Tab.Screen
         name="Home"
@@ -49,7 +60,7 @@ const BottomTabNavigator = () => {
         name="Profile"
         component={Profile}
         options={{
-          tabBarLabel: "Chats",
+          tabBarLabel: "Profile",
         }}
       />
 
@@ -69,7 +80,7 @@ const BottomTabNavigator = () => {
         name="AddContacts"
         component={AddContacts}
         options={{
-          tabBarLabel: "Notifications",
+          tabBarLabel: "Add contacts",
         }}
       />
     </Tab.Navigator>

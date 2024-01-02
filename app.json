@@ -11,10 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-   
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.shadowBrand"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,9 +29,22 @@
           {
             "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
           }
+        ],
+        [
+          "expo-location",
+          {
+            "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+          }
+        ],
+        [
+          "expo-image-picker",
+          {
+            "photosPermission": "The app accesses your photos to let you share them with your friends."
+          }
         ]
       ],
-      "package": "com.shadowBrand"
+      "package": "com.shadowBrand",
+      "permissions": ["READ_CONTACTS", "WRITE_CONTACTS"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

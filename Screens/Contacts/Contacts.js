@@ -5,38 +5,67 @@ import {
   ScrollView,
   FlatList,
   Image,
+  Alert,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ThemedView, StatusBar } from "../../components/UIcomponents";
 import { images } from "../../constants";
+import { useSelector } from "react-redux";
+import useIsFocused from "../../useIsFocused";
+import axios from "axios";
+import Loader from "../../components/UIcomponents/Loader";
 export default function Contacts() {
-  const contactData = [
-    {
-      id: 1,
-      name: "jestin",
-      mobile_number: "9798989978",
-    },
-    {
-      id: 2,
-      name: "Ravi",
-      mobile_number: "8474774545",
-    },
-    {
-      id: 3,
-      name: "Dhoni",
-      mobile_number: "0978876668",
-    },
-    {
-      id: 4,
-      name: "Mark",
-      mobile_number: "7656467870",
-    },
-    {
-      id: 5,
-      name: "John",
-      mobile_number: "4389768999",
-    },
-  ];
+  const userId = useSelector((state) => state.signIn.userId);
+  const focued = useIsFocused();
+  const [primaryContacts, setPrimaryContacts] = useState([]);
+  const [secondaryContacts, setSecondaryContacts] = useState([]);
+
+  const [isLoderOn, setIsLoaderOn] = useState(false);
+
+  async function getPrimaryContact() {
+    try {
+      const res = await axios.get(
+        `https://brandsdyno.com/shadow/api/getPrimary/${userId}`
+        // {
+        //   userId: userId,
+        // }
+        // config
+      );
+      const data = await res.data;
+      if (data) {
+        setPrimaryContacts(data);
+      }
+    } catch (error) {
+      console.log({ error });
+      // Alert.alert("something wrong with primary contacts");
+    }
+  }
+
+  async function getSecondaryContact() {
+    try {
+      const res = await axios.get(
+        `https://brandsdyno.com/shadow/api/getSecondary/${userId}`
+      );
+      const data = await res.data;
+      if (data) {
+        setSecondaryContacts(data);
+      }
+    } catch (error) {
+      console.log({ error });
+      // Alert.alert("something wrong with secondary contacts");
+    }
+  }
+
+
+  useEffect(() => {
+    if (focued) {
+      setIsLoaderOn(true);
+      getPrimaryContact();
+      getSecondaryContact();
+      setIsLoaderOn(false);
+    }
+  }, [focued]);
+
   return (
     <React.Fragment>
       <StatusBar />
@@ -51,58 +80,66 @@ export default function Contacts() {
           <View style={styles.primaryBox}>
             <Text style={styles.title}>Primary contacts</Text>
             <ScrollView nestedScrollEnabled={true}>
-              <FlatList
-                data={contactData}
-                scrollEnabled={true}
-                
-                renderItem={({ item, index }) => {
-                  return (
-                    <View
-                      style={{
-                        marginVertical: 12,
-                        marginLeft: 12,
-                        borderBottomWidth: 1,
-                        borderBottomColor: "white",
-                        paddingVertical: 6,
-                      }}
-                    >
-                      <Text style={{ color: "white" }}>{item.name}</Text>
-                      <Text style={{ color: "white" }}>
-                        {item.mobile_number}
-                      </Text>
-                    </View>
-                  );
-                }}
-              />
+              {primaryContacts?.length > 0 && (
+                <FlatList
+                  data={primaryContacts}
+                  scrollEnabled={true}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <View
+                        style={{
+                          marginVertical: 12,
+                          marginLeft: 12,
+                          borderBottomWidth: 1,
+                          borderBottomColor: "#BFA05E",
+                          paddingVertical: 6,
+                        }}
+                      >
+                        <Text style={{ color: "black" }}>
+                          {item?.firstName}
+                        </Text>
+                        <Text style={{ color: "black" }}>
+                          {item?.mobileNumber}
+                        </Text>
+                      </View>
+                    );
+                  }}
+                />
+              )}
             </ScrollView>
           </View>
           <View style={styles.secondaryBox}>
             <Text style={styles.title}>Secondary contacts</Text>
             <ScrollView nestedScrollEnabled={true}>
-              <FlatList
-                data={contactData}
-                scrollEnabled={true}
-                renderItem={({ item, index }) => {
-                  return (
-                    <View
-                      style={{
-                        marginVertical: 12,
-                        marginLeft: 12,
-                        borderBottomWidth: 1,
-                        borderBottomColor: "white",
-                        paddingVertical: 6,
-                      }}
-                    >
-                      <Text style={{ color: "white" }}>{item.name}</Text>
-                      <Text style={{ color: "white" }}>
-                        {item.mobile_number}
-                      </Text>
-                    </View>
-                  );
-                }}
-              />
+              {secondaryContacts?.length > 0 && (
+                <FlatList
+                  data={secondaryContacts}
+                  scrollEnabled={true}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <View
+                        style={{
+                          marginVertical: 12,
+                          marginLeft: 12,
+                          borderBottomWidth: 1,
+                          borderBottomColor: "#BFA05E",
+                          paddingVertical: 6,
+                        }}
+                      >
+                        <Text style={{ color: "black" }}>
+                          {item?.firstName}
+                        </Text>
+                        <Text style={{ color: "black" }}>
+                          {item.mobileNumber}
+                        </Text>
+                      </View>
+                    );
+                  }}
+                />
+              )}
             </ScrollView>
           </View>
+          <Loader isVisible={isLoderOn} />
         </ScrollView>
       </ThemedView>
     </React.Fragment>
@@ -118,15 +155,16 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: "gray",
     borderRadius: 90,
+    alignSelf : 'center'
   },
   title: {
-    color: "white",
+    color: "black",
     fontFamily: "Inter",
     fontSize: 24,
     fontWeight: "800",
     textAlign: "center",
     borderBottomWidth: 1,
-    borderBottomColor: "white",
+    borderBottomColor: "#BFA05E",
     paddingVertical: 8,
     maxWidth: "80%",
     marginLeft: 10,
@@ -134,7 +172,7 @@ const styles = StyleSheet.create({
   primaryBox: {
     width: 309,
     height: 306,
-    backgroundColor: "black",
+    backgroundColor: "#EDE9E9",
     borderRadius: 20,
     alignSelf: "center",
     marginVertical: 20,
@@ -142,7 +180,7 @@ const styles = StyleSheet.create({
   secondaryBox: {
     width: 309,
     height: 306,
-    backgroundColor: "black",
+    backgroundColor: "#EDE9E9",
     borderRadius: 20,
     alignSelf: "center",
     marginBottom: 20,

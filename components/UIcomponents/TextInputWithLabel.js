@@ -28,12 +28,14 @@ const TextInputWithLabel = ({
   onClickOfEditBtn = null,
   editable = true,
   numberOfLines = 1,
+  secureTextInput = false,
+  type= ""
 }) => {
   return (
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
       <TextInput
-        style={[styles.input, inputStyle]}
+        style={[styles.input, { backgroundColor: "white" }, inputStyle]}
         value={value}
         onChangeText={onChangeText}
         onBlur={onBlur}
@@ -41,7 +43,8 @@ const TextInputWithLabel = ({
         placeholderTextColor={"#4D4D4D"}
         editable={editable}
         numberOfLines={numberOfLines}
-        
+        secureTextEntry={secureTextInput}
+        keyboardType={type ?? ''}
       />
       {editBtn && !editable ? (
         <TouchableOpacity style={styles.edit} onPress={onClickOfEditBtn}>
@@ -64,9 +67,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: verticalScale(40),
-    textAlign: "center",
-    paddingVertical: verticalScale(8),
-    paddingLeft: -horizontalScale(4),
+    textAlign: "left",
+    // paddingVertical: verticalScale(8),
+    // paddingLeft: -horizontalScale(4),
   },
   edit: {
     position: "absolute",
