@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 let initialState = {
-  userId: "1",
+  userId: "",
   status: "",
 };
 
